@@ -1,0 +1,30 @@
+{
+  "name": "discord-minesweeper",
+  "version": "1.0.0",
+  "description": "Minesweeper game for discord bots",
+  "main": "src/index.js",
+  "types": "source/",
+  "scripts": {
+    "test": "nodemon source/index.ts",
+    "hack": "node ./test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KartikeSingh/discord-minesweeper.git"
+  },
+  "keywords": [
+    "discord",
+    "games",
+    "minesweeper"
+  ],
+  "author": "Shisui",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KartikeSingh/discord-minesweeper/issues"
+  },
+  "homepage": "https://github.com/KartikeSingh/discord-minesweeper#readme",
+  "dependencies": {
+    "discord.js": "^13.6.0",
+    "ms-prettify": "^1.3.1"
+  }
+}
