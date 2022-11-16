@@ -67,9 +67,9 @@ export default class Minesweeper {
                 }],
             }
 
-            const msg = interaction.replied ? await interaction.followUp({ fetchReply: true, embeds: m.embeds }) : await interaction.reply({ fetchReply: true, embeds: m.embeds });
+            const msg = interaction.replied || interaction.deferred ? await interaction.followUp({ fetchReply: true, embeds: m.embeds }) : await interaction.reply({ fetchReply: true, embeds: m.embeds });
 
-            const data = await handleInput(<Message>msg, interaction.user, bombs, number, visible, numberSet, remaining, _options)
+            const data = await handleInput(<Message>msg, interaction, bombs, number, visible, numberSet, remaining, _options)
 
             res(data)
         })

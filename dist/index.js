@@ -57,8 +57,8 @@ class Minesweeper {
                         description: (0, createGameBoard_1.default)(_options.size, bombs, number, visible) + `\n\n${_options.embedMessage.replace(/\{prefix\}/g, _options.prefix).replace(/\{timer\}/g, (0, ms_prettify_1.default)(_options.timer))}`
                     }],
             };
-            const msg = interaction.replied ? yield interaction.followUp({ fetchReply: true, embeds: m.embeds }) : yield interaction.reply({ fetchReply: true, embeds: m.embeds });
-            const data = yield (0, handleInput_1.default)(msg, interaction.user, bombs, number, visible, numberSet, remaining, _options);
+            const msg = interaction.replied || interaction.deferred ? yield interaction.followUp({ fetchReply: true, embeds: m.embeds }) : yield interaction.reply({ fetchReply: true, embeds: m.embeds });
+            const data = yield (0, handleInput_1.default)(msg, interaction, bombs, number, visible, numberSet, remaining, _options);
             res(data);
         }));
     }

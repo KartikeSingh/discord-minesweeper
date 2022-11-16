@@ -19,7 +19,16 @@ const game = require('discord-minesweeper').default;
 
 // interaction = command interaction, we get on slash commands
 // for options check below
-game.start(interaction, options)
+const result = await game.start(interaction, options);
+
+/* Example result object
+ * {
+ *  endReason: 0, // -1 => time (took too long to respond), 0 => lost the game, 1 => won the game
+ *  score: 10, // Amount of points they won
+ *  win: true, // Whether they won or not
+ * board: "the game board in string format (the game window made via emojis)"
+ * }
+ */
 ```
 
 ## Customization with options
@@ -51,16 +60,13 @@ game.start(ineraction, {
 
 ## Images
 - #### Gameboard
-![image](https://cdn.discordapp.com/attachments/930659938647289856/937021077710852196/unknown.png)
+![image](https://media.discordapp.net/attachments/814009062219317318/1042340314884603905/image.png)
 
 - #### Win Message
-![image](https://cdn.discordapp.com/attachments/930659938647289856/937021442703376424/unknown.png)
-
-- #### Timer Message
-![image](https://cdn.discordapp.com/attachments/930659938647289856/937021344946741368/unknown.png)
+![image](https://media.discordapp.net/attachments/814009062219317318/1042340314511323156/image.png)
 
 - #### Bomb Message
-![image](https://cdn.discordapp.com/attachments/934643467093672017/937021688648986634/unknown.png)
+![image](https://media.discordapp.net/attachments/814009062219317318/1042340314079318097/image.png)
 
 ## Supports
-For support or issues or queries contace me on my [discord server](https://discord.gg/XYnMTQNTFh).
+For support or issues or queries contace me on my [discord server](https://discord.gg/YayNfuEkFU).

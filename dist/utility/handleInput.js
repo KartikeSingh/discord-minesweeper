@@ -15,18 +15,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
 const createGameBoard_1 = __importDefault(require("./createGameBoard"));
 const ms_prettify_1 = __importDefault(require("ms-prettify"));
-exports.default = (msg, user, bombs, number, visible, numberSet, remaining, _options) => {
+exports.default = (msg, interaction, bombs, number, visible, numberSet, remaining, _options) => {
     return new Promise(res => {
+        const user = interaction.user;
         const col = new discord_js_1.MessageCollector(msg.channel, {
             filter: (m) => m.author.id === user.id && m.content.toLowerCase().startsWith(_options.prefix),
             time: _options.timer
         });
         let d = true;
         col.on('collect', (m) => {
-            var _a, _b;
-            const args = m.content.split(/ +/g);
-            console.log(args);
-            const pos = ((_a = args[1]) === null || _a === void 0 ? void 0 : _a.toUpperCase()) || ((_b = args[0]) === null || _b === void 0 ? void 0 : _b.toUpperCase());
+            var _a;
+            const pos = (_a = m.content.slice(_options.prefix.length)) === null || _a === void 0 ? void 0 : _a.toUpperCase();
             if (!visible.includes(pos) && !remaining.includes(pos)) {
                 m.reply({
                     embeds: [{
@@ -54,6 +53,8 @@ exports.default = (msg, user, bombs, number, visible, numberSet, remaining, _opt
             if (bombs.includes(pos)) {
                 remaining = remaining.filter(v => !bombs.includes(v));
                 visible.push(...bombs);
+                if (d)
+                    m.delete().catch(e => { d = false; });
                 col.stop("bomb_blast");
             }
             else {
@@ -63,7 +64,7 @@ exports.default = (msg, user, bombs, number, visible, numberSet, remaining, _opt
                 remaining = remaining.filter(v => !x.includes(v));
                 if (remaining.length - bombs.length === 0)
                     return col.stop("mined");
-                msg.edit({
+                interaction.editReply({
                     embeds: [{
                             title: "💣 Mine 🧹 Sweeper 🎮 Game",
                             description: (0, createGameBoard_1.default)(Math.sqrt(visible.length + remaining.length), bombs, number, visible) + `\n\n${_options.embedMessage.replace(/\{prefix\}/g, _options.prefix).replace(/\{timer\}/g, (0, ms_prettify_1.default)(_options.timer))}`
@@ -87,16 +88,16 @@ exports.default = (msg, user, bombs, number, visible, numberSet, remaining, _opt
                 m = _options.winMessage.replace(/\{user\}/g, user.username);
             }
             ;
-            msg.edit({
+            interaction.editReply({
                 embeds: [{
                         color: reason === "good" ? "GREEN" : "RED",
                         title: m,
-                        description: (0, createGameBoard_1.default)(Math.sqrt(visible.length + remaining.length), bombs, number, visible) + `\n\nTo open a box type \`${_options.prefix} block-id\`\nfor example block id of top left block is \`A1\``
+                        description: (0, createGameBoard_1.default)(Math.sqrt(visible.length + remaining.length), bombs, number, visible) + _options.embedMessage.replace(/\{prefix\}/ig, _options.prefix)
                     }]
             });
             res({
                 endReason: reason,
-                score: ((_a = visible.filter(v => !bombs.includes(v))) === null || _a === void 0 ? void 0 : _a.length) > 0 ? (_b = visible.filter(v => !bombs.includes(v))) === null || _b === void 0 ? void 0 : _b.reduce((p, c) => p + c) : 0 || 0,
+                score: ((_a = visible.filter(v => !bombs.includes(v))) === null || _a === void 0 ? void 0 : _a.length) > 0 ? (_b = visible.filter(v => !bombs.includes(v)).map(x => number.filter(v => v.position === x)[0].value)) === null || _b === void 0 ? void 0 : _b.reduce((p, c) => p + c) : 0 || 0,
                 win: reason === "mined"
             });
         });

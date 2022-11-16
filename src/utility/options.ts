@@ -53,7 +53,7 @@ export default class Options {
         this.prefix = typeof (params.prefix) === "string" ? params.prefix?.toLowerCase()?.trim() : "!choose";
         this.size = params.size || 5;
         this.timer = params.timer || 60000;
-        this.embedMessage = params.embedMessage || "To open a box type \`{prefix} block-id\`\nfor example block id of top left block is \`A1\`"
+        this.embedMessage = params.embedMessage || "To open a box type \`{prefix}block-id\`\nfor example block id of top left block is \`A1\`"
         this.timerMessage = params.timerMessage || "The bombs are blasted, you too way too much time to sweep the bombs\nYou lost";
         this.bombMessage = params.bombMessage || "You stepped on a bombs 💥\nYou lost";
         this.winMessage = params.winMessage || "You successfully cleaned the place gg\nYou Won";

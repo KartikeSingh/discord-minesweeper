@@ -1,12 +1,12 @@
 {
-  "name": "discord-minesweeper",
-  "version": "1.0.0",
+  "name": "discord-minesweeper-game",
+  "version": "1.1.0",
   "description": "Minesweeper game for discord bots",
-  "main": "src/index.js",
-  "types": "source/",
+  "main": "dist/index.js",
+  "types": "src/",
   "scripts": {
     "test": "nodemon source/index.ts",
-    "hack": "node ./test.js"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
