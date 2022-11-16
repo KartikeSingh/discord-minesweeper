@@ -55,7 +55,7 @@ exports.default = (msg, interaction, bombs, number, visible, numberSet, remainin
                 visible.push(...bombs);
                 if (d)
                     m.delete().catch(e => { d = false; });
-                col.stop("bomb_blast");
+                col.stop("0");
             }
             else {
                 let x = numberSet.filter(v => v.includes(pos))[0];
@@ -63,7 +63,7 @@ exports.default = (msg, interaction, bombs, number, visible, numberSet, remainin
                 visible.push(...x.split(","));
                 remaining = remaining.filter(v => !x.includes(v));
                 if (remaining.length - bombs.length === 0)
-                    return col.stop("mined");
+                    return col.stop("1");
                 interaction.editReply({
                     embeds: [{
                             title: "💣 Mine 🧹 Sweeper 🎮 Game",
@@ -81,7 +81,7 @@ exports.default = (msg, interaction, bombs, number, visible, numberSet, remainin
                 m = _options.timerMessage.replace(/\{user\}/g, user.username);
                 visible.push(...bombs);
             }
-            else if (reason === "bomb_blast") {
+            else if (reason === "0") {
                 m = _options.bombMessage.replace(/\{user\}/g, user.username);
             }
             else {
@@ -90,15 +90,16 @@ exports.default = (msg, interaction, bombs, number, visible, numberSet, remainin
             ;
             interaction.editReply({
                 embeds: [{
-                        color: reason === "good" ? "GREEN" : "RED",
+                        color: reason === "1" ? "GREEN" : "RED",
                         title: m,
-                        description: (0, createGameBoard_1.default)(Math.sqrt(visible.length + remaining.length), bombs, number, visible) + _options.embedMessage.replace(/\{prefix\}/ig, _options.prefix)
+                        description: (0, createGameBoard_1.default)(Math.sqrt(visible.length + remaining.length), bombs, number, visible) + `\n\n${_options.embedMessage.replace(/\{prefix\}/g, _options.prefix).replace(/\{timer\}/g, (0, ms_prettify_1.default)(_options.timer))}`
                     }]
             });
             res({
-                endReason: reason,
+                endReason: parseInt(reason) || -1,
                 score: ((_a = visible.filter(v => !bombs.includes(v))) === null || _a === void 0 ? void 0 : _a.length) > 0 ? (_b = visible.filter(v => !bombs.includes(v)).map(x => number.filter(v => v.position === x)[0].value)) === null || _b === void 0 ? void 0 : _b.reduce((p, c) => p + c) : 0 || 0,
-                win: reason === "mined"
+                win: reason === "1",
+                board: (0, createGameBoard_1.default)(Math.sqrt(visible.length + remaining.length), bombs, number, visible)
             });
         });
     });
