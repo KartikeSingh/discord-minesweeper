@@ -1,6 +1,6 @@
 ## Installations
 ```
-npm i discord-fight-game
+npm i discord-minesweeper-game
 ```
 
 ## What ?
@@ -14,7 +14,7 @@ This package is to make a minesweeper game for your discord bot.
 
 ## How ?
 ```js
-const game = require('discord-minesweeper').default;
+const game = require('discord-minesweeper-game').default;
 // import game from 'discord-minesweeper'; // for ts
 
 // interaction = command interaction, we get on slash commands
