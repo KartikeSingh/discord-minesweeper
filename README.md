@@ -5,6 +5,7 @@ npm i discord-minesweeper-game
 
 ## What ?
 This package is to make a minesweeper game for your discord bot.
+Now `only` supports `discord JS 14`
 
 ## Why ?
 - Easy to use.

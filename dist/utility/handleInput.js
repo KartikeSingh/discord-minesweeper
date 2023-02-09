@@ -28,10 +28,9 @@ exports.default = (msg, interaction, bombs, number, visible, numberSet, remainin
             const pos = (_a = m.content.slice(_options.prefix.length)) === null || _a === void 0 ? void 0 : _a.toUpperCase();
             if (!visible.includes(pos) && !remaining.includes(pos)) {
                 m.reply({
-                    embeds: [{
-                            color: "RED",
+                    embeds: [new discord_js_1.EmbedBuilder({
                             title: "Invalid block ID"
-                        }]
+                        }).setColor("Red")]
                 }).then((v) => __awaiter(void 0, void 0, void 0, function* () {
                     yield new Promise(res => setTimeout(res, 3000));
                     v.delete();
@@ -40,10 +39,9 @@ exports.default = (msg, interaction, bombs, number, visible, numberSet, remainin
             }
             if (!remaining.includes(pos)) {
                 m.reply({
-                    embeds: [{
-                            color: "RED",
+                    embeds: [new discord_js_1.EmbedBuilder({
                             title: "This block is already open"
-                        }]
+                        }).setColor("Red")]
                 }).then((v) => __awaiter(void 0, void 0, void 0, function* () {
                     yield new Promise(res => setTimeout(res, 3000));
                     v.delete();
@@ -89,11 +87,10 @@ exports.default = (msg, interaction, bombs, number, visible, numberSet, remainin
             }
             ;
             interaction.editReply({
-                embeds: [{
-                        color: reason === "1" ? "GREEN" : "RED",
+                embeds: [new discord_js_1.EmbedBuilder({
                         title: m,
                         description: (0, createGameBoard_1.default)(Math.sqrt(visible.length + remaining.length), bombs, number, visible) + `\n\n${_options.embedMessage.replace(/\{prefix\}/g, _options.prefix).replace(/\{timer\}/g, (0, ms_prettify_1.default)(_options.timer))}`
-                    }]
+                    }).setColor(reason === "1" ? "Green" : "Red")]
             });
             res({
                 endReason: parseInt(reason) || -1,

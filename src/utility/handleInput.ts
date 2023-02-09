@@ -1,4 +1,4 @@
-import { CommandInteraction, Message, MessageCollector } from "discord.js";
+import { CommandInteraction, EmbedBuilder, Message, MessageCollector } from "discord.js";
 import { numberType } from "../interfaces";
 import createGameBoard from "./createGameBoard";
 import Options from "./options";
@@ -20,10 +20,9 @@ export default (msg: Message, interaction: CommandInteraction, bombs: string[], 
 
             if (!visible.includes(pos) && !remaining.includes(pos)) {
                 m.reply({
-                    embeds: [{
-                        color: "RED",
+                    embeds: [new EmbedBuilder({
                         title: "Invalid block ID"
-                    }]
+                    }).setColor("Red")]
                 }).then(async v => {
                     await new Promise(res => setTimeout(res, 3000));
                     v.delete();
@@ -34,10 +33,9 @@ export default (msg: Message, interaction: CommandInteraction, bombs: string[], 
 
             if (!remaining.includes(pos)) {
                 m.reply({
-                    embeds: [{
-                        color: "RED",
+                    embeds: [new EmbedBuilder({
                         title: "This block is already open"
-                    }]
+                    }).setColor("Red")]
                 }).then(async v => {
                     await new Promise(res => setTimeout(res, 3000));
                     v.delete();
@@ -85,11 +83,10 @@ export default (msg: Message, interaction: CommandInteraction, bombs: string[], 
             };
 
             interaction.editReply({
-                embeds: [{
-                    color: reason === "1" ? "GREEN" : "RED",
+                embeds: [new EmbedBuilder({
                     title: m,
-                    description: createGameBoard(Math.sqrt(visible.length + remaining.length), bombs, number, visible)  + `\n\n${_options.embedMessage.replace(/\{prefix\}/g, _options.prefix).replace(/\{timer\}/g, ms(_options.timer))}`
-                }]
+                    description: createGameBoard(Math.sqrt(visible.length + remaining.length), bombs, number, visible) + `\n\n${_options.embedMessage.replace(/\{prefix\}/g, _options.prefix).replace(/\{timer\}/g, ms(_options.timer))}`
+                }).setColor(reason === "1" ? "Green" : "Red")]
             });
 
             res({
